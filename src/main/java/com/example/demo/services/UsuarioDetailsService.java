@@ -20,10 +20,13 @@ public class UsuarioDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByCedula(cedula)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
+        boolean deshabilitado = usuario.getEstado() == Usuario.EstadoUsuario.Inactivo;
+
         return User.builder()
                 .username(usuario.getCedula())
                 .password(usuario.getContraseña()) // contraseña encriptada
                 .roles(usuario.getRol().getNombreRol())
+                .disabled(deshabilitado) // 🔥 BLOQUEA SI ESTÁ INACTIVO
                 .build();
     }
 }

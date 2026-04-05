@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Médicos | MASS</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+
+    <style>
+        body { background-color: #f9fafb; font-family: "Segoe UI", sans-serif; }
+        header { background-color: #004aad; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .navbar-brand { font-weight: 600; font-size: 1.25rem; }
+        .navbar img { height: 50px; margin-right: 10px; }
+        .nav-link { color: #fff !important; }
+        .nav-link:hover { color: #d6e4ff !important; }
+        .card { border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border: none; }
+        .page-title { color: #004aad; font-weight: 600; margin: 30px 0 20px; }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/administrador/home}">
+                <img th:src="@{/images/logo.png}" alt="Logo MASS">
+                MASS - Módulo Administrador
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/home}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/ordenes}">Órdenes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/usuarios}">Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/administrador/medicos}">Médicos</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/reportes}">Reportes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/configuracion}">Configuración</a></li>
+                </ul>
+
+                <form class="d-flex ms-md-3" th:action="@{/logout}" method="post">
+                    <button class="btn btn-outline-light" type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container mt-4">
+
+    <h2 class="page-title">
+        <i class="bi bi-person-badge-fill me-2"></i>Gestión de Médicos
+    </h2>
+
+    <!-- ALERTAS -->
+    <div th:if="${exito}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${exito}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead style="background-color:#004aad; color:white;">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Cédula</th>
+                        <th>Correo</th>
+                        <th>Estado</th>
+                        <th style="width: 220px;">Acciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="m : ${medicos}">
+                        <td th:text="${m.idUsuario}"></td>
+                        <td th:text="${m.nombre}"></td>
+                        <td th:text="${m.apellido}"></td>
+                        <td><code th:text="${m.cedula}"></code></td>
+
+                        <td th:text="${m.correo != null ? m.correo : 'Sin correo'}"></td>
+
+                        <!-- Estado -->
+                        <td>
+                            <span class="badge"
+                                  th:classappend="${m.estado.name() == 'Activo'} ? 'bg-success' : 'bg-danger'"
+                                  th:text="${m.estado}">
+                            </span>
+                        </td>
+
+                        <!-- Acciones -->
+                        <td>
+                            <a class="btn btn-sm btn-primary me-1"
+                               th:href="@{/administrador/medicos/{id}/editar(id=${m.idUsuario})}">
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </a>
+
+                            <form th:action="@{/administrador/medicos/{id}/estado(id=${m.idUsuario})}"
+                                  method="post" style="display:inline;">
+                                <button type="submit"
+                                        class="btn btn-sm"
+                                        th:classappend="${m.estado.name() == 'Activo'} ? 'btn-danger' : 'btn-success'"
+                                        th:text="${m.estado.name() == 'Activo'} ? 'Desactivar' : 'Activar'">
+                                </button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
