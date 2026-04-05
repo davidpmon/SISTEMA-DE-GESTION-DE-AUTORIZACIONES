@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Gestión de Órdenes | MASS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+    <style>
+        body { background-color: #f9fafb; font-family: "Segoe UI", sans-serif; }
+        header { background-color: #004aad; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .navbar-brand { font-weight: 600; font-size: 1.25rem; }
+        .navbar img { height: 50px; margin-right: 10px; }
+        .nav-link { color: #fff !important; transition: 0.3s; }
+        .nav-link:hover { color: #d6e4ff !important; }
+        .card { border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border: none; }
+        .btn-mass { background-color: #004aad; border: none; color: white; }
+        .btn-mass:hover { background-color: #003580; color: white; }
+        .page-title { color: #004aad; font-weight: 600; margin: 30px 0 20px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/administrador/home}">
+                <img th:src="@{/images/logo.png}" alt="Logo MASS">
+                MASS - Módulo Administrador
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/home}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/administrador/ordenes}">Órdenes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/usuarios}">Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/reportes}">Reportes</a></li>
+                </ul>
+                <form class="d-flex ms-md-3" th:action="@{/logout}" method="post">
+                    <button class="btn btn-outline-light" type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container mt-4">
+    <h2 class="page-title"><i class="bi bi-file-earmark-medical me-2"></i>Gestión de Órdenes Médicas</h2>
+
+    <!-- Alerta flash -->
+    <div th:if="${exito}" class="alert alert-success alert-dismissible fade show">
+        <i class="bi bi-check-circle-fill me-2"></i><span th:text="${exito}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Filtros -->
+    <div class="card mb-4 p-3">
+        <form th:action="@{/administrador/ordenes}" method="get" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label fw-semibold small">Estado</label>
+                <select name="estado" class="form-select">
+                    <option value="">Todos los estados</option>
+                    <option value="PENDIENTE"   th:selected="${estadoFiltro == 'PENDIENTE'}">⏳ Pendiente</option>
+                    <option value="EN_REVISION" th:selected="${estadoFiltro == 'EN_REVISION'}">🔍 En revisión</option>
+                    <option value="APROBADA"    th:selected="${estadoFiltro == 'APROBADA'}">✅ Aprobada</option>
+                    <option value="RECHAZADA"   th:selected="${estadoFiltro == 'RECHAZADA'}">❌ Rechazada</option>
+                    <option value="CORREGIDA"   th:selected="${estadoFiltro == 'CORREGIDA'}">✏️ Corregida</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold small">Médico</label>
+                <select name="medicoId" class="form-select">
+                    <option value="">Todos los médicos</option>
+                    <option th:each="m : ${medicos}"
+                            th:value="${m.idUsuario}"
+                            th:text="${m.nombre + ' ' + m.apellido}"
+                            th:selected="${medicoFiltro == m.idUsuario}"></option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-mass w-100"><i class="bi bi-search me-1"></i>Filtrar</button>
+            </div>
+            <div class="col-md-2">
+                <a th:href="@{/administrador/ordenes}" class="btn btn-outline-secondary w-100">Limpiar</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Tabla -->
+    <div class="card">
+        <div class="card-body p-0">
+            <div th:if="${#lists.isEmpty(ordenes)}" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2"></i>No se encontraron órdenes.
+            </div>
+            <div th:unless="${#lists.isEmpty(ordenes)}" class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead style="background-color:#004aad; color:white;">
+                        <tr>
+                            <th>#</th>
+                            <th>Paciente</th>
+                            <th>Médico</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="o : ${ordenes}">
+                            <td th:text="${o.idOrden}"></td>
+                            <td th:text="${o.paciente.usuario.nombre + ' ' + o.paciente.usuario.apellido}"></td>
+                            <td th:text="${o.medico.nombre + ' ' + o.medico.apellido}"></td>
+                            <td th:text="${#strings.abbreviate(o.descripcion, 45)}"></td>
+                            <td>
+                                <span th:switch="${o.estado.name()}">
+                                    <span th:case="'PENDIENTE'"   class="badge bg-warning text-dark">⏳ Pendiente</span>
+                                    <span th:case="'EN_REVISION'" class="badge bg-info text-dark">🔍 En revisión</span>
+                                    <span th:case="'APROBADA'"    class="badge bg-success">✅ Aprobada</span>
+                                    <span th:case="'RECHAZADA'"   class="badge bg-danger">❌ Rechazada</span>
+                                    <span th:case="'CORREGIDA'"   class="badge bg-secondary">✏️ Corregida</span>
+                                </span>
+                            </td>
+                            <td th:text="${#temporals.format(o.fecha,'dd/MM/yyyy')}"></td>
+                            <td>
+                                <a th:href="@{/administrador/ordenes/{id}(id=${o.idOrden})}"
+                                   class="btn btn-sm btn-mass">
+                                    <i class="bi bi-eye-fill"></i> Ver
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
