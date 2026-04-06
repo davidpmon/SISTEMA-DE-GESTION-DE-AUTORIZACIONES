@@ -24,19 +24,17 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" th:href="@{/admin}">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/autorizador}">
                 <img th:src="@{/images/logo.png}" alt="Logo MASS">
-                MASS - Módulo Administrador
+                MASS - Módulo Autorizador
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/admin}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link active" th:href="@{/administrador/ordenes}">Órdenes</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/usuarios}">Usuarios</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/reportes}">Reportes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/autorizador/ordenes}">Órdenes</a></li>
                 </ul>
                 <form class="d-flex ms-md-3" th:action="@{/logout}" method="post">
                     <button class="btn btn-outline-light" type="submit">Cerrar sesión</button>
@@ -57,7 +55,7 @@
 
     <!-- Filtros -->
     <div class="card mb-4 p-3">
-        <form th:action="@{/administrador/ordenes}" method="get" class="row g-3 align-items-end">
+        <form th:action="@{/autorizador/ordenes}" method="get" class="row g-3 align-items-end">
             <div class="col-md-4">
                 <label class="form-label fw-semibold small">Estado</label>
                 <select name="estado" class="form-select">
@@ -83,7 +81,7 @@
                 <button type="submit" class="btn btn-mass w-100"><i class="bi bi-search me-1"></i>Filtrar</button>
             </div>
             <div class="col-md-2">
-                <a th:href="@{/administrador/ordenes}" class="btn btn-outline-secondary w-100">Limpiar</a>
+                <a th:href="@{/autorizador/ordenes}" class="btn btn-outline-secondary w-100">Limpiar</a>
             </div>
         </form>
     </div>
@@ -97,23 +95,23 @@
             <div th:unless="${#lists.isEmpty(ordenes)}" class="table-responsive">
                 <table class="table table-hover mb-0">
                     <thead style="background-color:#004aad; color:white;">
-                        <tr>
-                            <th>#</th>
-                            <th>Paciente</th>
-                            <th>Médico</th>
-                            <th>Descripción</th>
-                            <th>Estado</th>
-                            <th>Fecha</th>
-                            <th>Acción</th>
-                        </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Paciente</th>
+                        <th>Médico</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                        <th>Acción</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="o : ${ordenes}">
-                            <td th:text="${o.idOrden}"></td>
-                            <td th:text="${o.paciente.usuario.nombre + ' ' + o.paciente.usuario.apellido}"></td>
-                            <td th:text="${o.medico.nombre + ' ' + o.medico.apellido}"></td>
-                            <td th:text="${#strings.abbreviate(o.descripcion, 45)}"></td>
-                            <td>
+                    <tr th:each="o : ${ordenes}">
+                        <td th:text="${o.idOrden}"></td>
+                        <td th:text="${o.paciente.usuario.nombre + ' ' + o.paciente.usuario.apellido}"></td>
+                        <td th:text="${o.medico.nombre + ' ' + o.medico.apellido}"></td>
+                        <td th:text="${#strings.abbreviate(o.descripcion, 45)}"></td>
+                        <td>
                                 <span th:switch="${o.estado.name()}">
                                     <span th:case="'PENDIENTE'"   class="badge bg-warning text-dark">Pendiente</span>
                                     <span th:case="'EN_REVISION'" class="badge bg-info text-dark">En revisión</span>
@@ -121,15 +119,15 @@
                                     <span th:case="'RECHAZADA'"   class="badge bg-danger">Rechazada</span>
                                     <span th:case="'CORREGIDA'"   class="badge bg-secondary">Corregida</span>
                                 </span>
-                            </td>
-                            <td th:text="${#temporals.format(o.fecha,'dd/MM/yyyy')}"></td>
-                            <td>
-                                <a th:href="@{/administrador/ordenes/{id}(id=${o.idOrden})}"
-                                   class="btn btn-sm btn-mass">
-                                    <i class="bi bi-eye-fill"></i> Ver
-                                </a>
-                            </td>
-                        </tr>
+                        </td>
+                        <td th:text="${#temporals.format(o.fecha,'dd/MM/yyyy')}"></td>
+                        <td>
+                            <a th:href="@{/autorizador/ordenes/{id}(id=${o.idOrden})}"
+                               class="btn btn-sm btn-mass">
+                                <i class="bi bi-eye-fill"></i> Ver
+                            </a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

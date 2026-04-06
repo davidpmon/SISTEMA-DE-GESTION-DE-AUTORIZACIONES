@@ -39,6 +39,10 @@ public class OrdenMedica {
     private String descripcion;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo", nullable = false)
+    private TipoOrden tipo;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoOrden estado = EstadoOrden.PENDIENTE;
 
@@ -52,15 +56,22 @@ public class OrdenMedica {
         RECHAZADA,
         CORREGIDA
     }
+    public enum TipoOrden {
+        MEDICAMENTO,
+        EXAMEN_LABORATORIO,
+        TERAPIA,
+        OTRO
+    }
 
     // CONSTRUCTORES
     public OrdenMedica() {}
-
-    public OrdenMedica(HistoriaClinica historia, Usuario medico, Paciente paciente, String descripcion) {
+    public OrdenMedica(HistoriaClinica historia, Usuario medico, Paciente paciente, String descripcion, TipoOrden tipo)
+    {
         this.historia = historia;
         this.medico = medico;
         this.paciente = paciente;
         this.descripcion = descripcion;
+        this.tipo = tipo; // NUEVO, TIPO ORDEN
         this.fecha = LocalDateTime.now();
         this.estado = EstadoOrden.PENDIENTE;
     }
@@ -119,4 +130,7 @@ public class OrdenMedica {
     public void setEstado(EstadoOrden estado) {
         this.estado = estado;
     }
+
+    public TipoOrden getTipo() { return tipo; }
+    public void setTipo(TipoOrden tipo) { this.tipo = tipo; }
 }

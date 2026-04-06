@@ -148,7 +148,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" th:href="@{/autorizador/home}">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/autorizador}">
                 <img th:src="@{/images/logo.png}" alt="Logo MASS">
                 MASS - Módulo Autorizador
             </a>
@@ -159,12 +159,8 @@
 
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-                    <li class="nav-item"><a class="nav-link active" th:href="@{/autorizador/home}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/pendientes}">Órdenes Pendientes</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/aprobadas}">Órdenes Aprobadas</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/rechazadas}">Órdenes Rechazadas</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/historial}">Historial</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/perfil}">Mi Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/autorizador}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/autorizador}">Órdenes Médicas</a></li>
                 </ul>
                 <form class="d-flex ms-md-3" th:action="@{/logout}" method="post">
                     <button class="btn btn-outline-light" type="submit">Cerrar sesión</button>
@@ -191,13 +187,7 @@
             <div class="col-lg-4">
                 <h2 class="fw-normal">Autorización de Órdenes</h2>
                 <p>Revise, autorice o solicite correcciones a las órdenes.</p>
-                <p><a class="btn btn-secondary px-4" th:href="@{/autorizador/pendientes}">Ver detalles &raquo;</a></p>
-            </div>
-
-            <div class="col-lg-4">
-                <h2 class="fw-normal">Historial de Autorizaciones</h2>
-                <p>Visualice el registro histórico de todas las órdenes procesadas.</p>
-                <p><a class="btn btn-secondary px-4" th:href="@{/autorizador/historial}">Ver detalles &raquo;</a></p>
+                <p><a class="btn btn-secondary px-4" th:href="@{/autorizador/ordenes}">Ver detalles &raquo;</a></p>
             </div>
         </div>
     </div>

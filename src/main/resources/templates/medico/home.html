@@ -109,7 +109,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" th:href="@{/medico/home}">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/medico}">
                 <img th:src="@{/images/logo.png}" alt="Logo MASS">
                 MASS - Módulo Médico
             </a>
@@ -120,10 +120,10 @@
 
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/medico/home}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/medico/historial}">Historial clínico</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/medico/ordenes}">Órdenes médicas</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/medico/ordenes/historial-ordenes}">Historial de órdenes</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/medico}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/medico/historial}">Historial Clínico</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/medico/ordenes}">Órdenes Médicas</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/medico/ordenes/historial-ordenes}">Historial de Órdenes</a></li>
                 </ul>
                 <form class="d-flex ms-md-3" th:action="@{/logout}" method="post">
                     <button class="btn btn-outline-light" type="submit">Cerrar sesión</button>

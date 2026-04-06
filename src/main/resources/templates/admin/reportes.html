@@ -26,7 +26,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" th:href="@{/administrador/home}">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/admin}">
                 <img th:src="@{/images/logo.png}" alt="Logo MASS">
                 MASS - Módulo Administrador
             </a>
@@ -35,8 +35,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/home}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/administrador/ordenes}">Órdenes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/admin}">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/administrador/usuarios}">Usuarios</a></li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/administrador/reportes}">Reportes</a></li>
                 </ul>
@@ -92,28 +91,28 @@
         <div class="card-body">
             <div class="mb-3">
                 <div class="d-flex justify-content-between mb-1">
-                    <span class="small fw-semibold">⏳ Pendientes</span>
+                    <span class="small fw-semibold">Pendientes</span>
                     <span class="small" th:text="${#numbers.formatDecimal(stats.pendientes * 100.0 / total, 1, 1)} + '%'"></span>
                 </div>
                 <div class="progress"><div class="progress-bar bg-warning" th:style="'width:' + ${stats.pendientes * 100 / total} + '%'"></div></div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between mb-1">
-                    <span class="small fw-semibold">✅ Aprobadas</span>
+                    <span class="small fw-semibold">Aprobadas</span>
                     <span class="small" th:text="${#numbers.formatDecimal(stats.aprobadas * 100.0 / total, 1, 1)} + '%'"></span>
                 </div>
                 <div class="progress"><div class="progress-bar bg-success" th:style="'width:' + ${stats.aprobadas * 100 / total} + '%'"></div></div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between mb-1">
-                    <span class="small fw-semibold">❌ Rechazadas</span>
+                    <span class="small fw-semibold">Rechazadas</span>
                     <span class="small" th:text="${#numbers.formatDecimal(stats.rechazadas * 100.0 / total, 1, 1)} + '%'"></span>
                 </div>
                 <div class="progress"><div class="progress-bar bg-danger" th:style="'width:' + ${stats.rechazadas * 100 / total} + '%'"></div></div>
             </div>
             <div>
                 <div class="d-flex justify-content-between mb-1">
-                    <span class="small fw-semibold">🔍 En revisión</span>
+                    <span class="small fw-semibold">En revisión</span>
                     <span class="small" th:text="${#numbers.formatDecimal(stats.enRevision * 100.0 / total, 1, 1)} + '%'"></span>
                 </div>
                 <div class="progress"><div class="progress-bar bg-info" th:style="'width:' + ${stats.enRevision * 100 / total} + '%'"></div></div>
