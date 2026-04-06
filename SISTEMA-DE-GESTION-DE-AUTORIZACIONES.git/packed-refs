@@ -1,0 +1,8 @@
+# pack-refs with: peeled fully-peeled sorted 
+1220b9cfc81c743f4a0f61a1f83c6eb15fa84956 refs/heads/develop
+9f4770984cf59045a37e23e3f83163cdd939c956 refs/heads/feature/main.java
+d0cb8d1712af760a5adfd740df4c660870962c54 refs/heads/login
+16c9fdb51ee29a0e6d4c86a9483f842a3bf5e26d refs/heads/main
+9f4770984cf59045a37e23e3f83163cdd939c956 refs/pull/2/head
+d0cb8d1712af760a5adfd740df4c660870962c54 refs/pull/3/head
+0c06eba247f73472ad93f114589d23d3edff31b6 refs/pull/3/merge

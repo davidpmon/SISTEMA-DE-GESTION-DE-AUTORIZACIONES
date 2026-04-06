@@ -62,11 +62,11 @@
                 <label class="form-label fw-semibold small">Estado</label>
                 <select name="estado" class="form-select">
                     <option value="">Todos los estados</option>
-                    <option value="PENDIENTE"   th:selected="${estadoFiltro == 'PENDIENTE'}">⏳ Pendiente</option>
-                    <option value="EN_REVISION" th:selected="${estadoFiltro == 'EN_REVISION'}">🔍 En revisión</option>
-                    <option value="APROBADA"    th:selected="${estadoFiltro == 'APROBADA'}">✅ Aprobada</option>
-                    <option value="RECHAZADA"   th:selected="${estadoFiltro == 'RECHAZADA'}">❌ Rechazada</option>
-                    <option value="CORREGIDA"   th:selected="${estadoFiltro == 'CORREGIDA'}">✏️ Corregida</option>
+                    <option value="PENDIENTE"   th:selected="${estadoFiltro == 'PENDIENTE'}">Pendiente</option>
+                    <option value="EN_REVISION" th:selected="${estadoFiltro == 'EN_REVISION'}">En revisión</option>
+                    <option value="APROBADA"    th:selected="${estadoFiltro == 'APROBADA'}">Aprobada</option>
+                    <option value="RECHAZADA"   th:selected="${estadoFiltro == 'RECHAZADA'}">Rechazada</option>
+                    <option value="CORREGIDA"   th:selected="${estadoFiltro == 'CORREGIDA'}">Corregida</option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -115,11 +115,11 @@
                             <td th:text="${#strings.abbreviate(o.descripcion, 45)}"></td>
                             <td>
                                 <span th:switch="${o.estado.name()}">
-                                    <span th:case="'PENDIENTE'"   class="badge bg-warning text-dark">⏳ Pendiente</span>
-                                    <span th:case="'EN_REVISION'" class="badge bg-info text-dark">🔍 En revisión</span>
-                                    <span th:case="'APROBADA'"    class="badge bg-success">✅ Aprobada</span>
-                                    <span th:case="'RECHAZADA'"   class="badge bg-danger">❌ Rechazada</span>
-                                    <span th:case="'CORREGIDA'"   class="badge bg-secondary">✏️ Corregida</span>
+                                    <span th:case="'PENDIENTE'"   class="badge bg-warning text-dark">Pendiente</span>
+                                    <span th:case="'EN_REVISION'" class="badge bg-info text-dark">En revisión</span>
+                                    <span th:case="'APROBADA'"    class="badge bg-success">Aprobada</span>
+                                    <span th:case="'RECHAZADA'"   class="badge bg-danger">Rechazada</span>
+                                    <span th:case="'CORREGIDA'"   class="badge bg-secondary">Corregida</span>
                                 </span>
                             </td>
                             <td th:text="${#temporals.format(o.fecha,'dd/MM/yyyy')}"></td>

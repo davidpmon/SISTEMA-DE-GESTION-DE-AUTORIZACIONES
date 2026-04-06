@@ -54,6 +54,7 @@ public class OrdenMedicaController {
     public String crearOrden(
             @RequestParam("descripcion") String descripcion,
             @RequestParam("id_historia") Integer idHistoria,
+            @RequestParam("tipo_orden") String tipoString,
             Authentication authentication) {
 
         String cedula = authentication.getName();
@@ -78,7 +79,19 @@ public class OrdenMedicaController {
         orden.setMedico(medico);
         orden.setHistoria(historia);
         orden.setPaciente(paciente);
+        orden.setTipo(OrdenMedica.TipoOrden.valueOf(tipoString.toUpperCase()));
 
+        try {
+            // Intentamos convertir el String (ej: "MEDICAMENTO") al Enum
+            // Usamos .trim() para quitar espacios y .toUpperCase() por seguridad en convencion de mayusculas
+            String valorLimpio = tipoString.trim().toUpperCase();
+            orden.setTipo(OrdenMedica.TipoOrden.valueOf(valorLimpio));
+        } catch (IllegalArgumentException e) {
+            // Si el valor del HTML no coincide con el Enum (como te pasó con "EXAMEN")
+            // le asignamos un valor por defecto para que el programa no explote
+            System.out.println("Error: El tipo '" + tipoString + "' no existe en el Enum. Usando OTRO.");
+            orden.setTipo(OrdenMedica.TipoOrden.OTRO);
+        }
         ordenRepo.save(orden);
         Integer idGenerado = orden.getIdOrden();
         System.out.println("Orden médica creada con paciente ID: " + paciente.getIdPaciente());

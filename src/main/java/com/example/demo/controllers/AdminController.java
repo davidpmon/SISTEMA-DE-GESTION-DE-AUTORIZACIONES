@@ -99,7 +99,7 @@ public class AdminController {
 
         return "admin/usuarios";
     }
-    // ── 👥 CRUD USUARIOS ─────────────────────────────────────────────────────────
+    // ── CRUD USUARIOS ─────────────────────────────────────────────────────────
 
     // FORM CREAR USUARIO
     @GetMapping("/usuarios/nuevo")
@@ -171,7 +171,7 @@ public class AdminController {
         return "redirect:/administrador/usuarios";
     }
 
-    // ── 👨‍⚕️ MÉDICOS ───────────────────────────────────────────────────────────
+    // ── MÉDICOS ───────────────────────────────────────────────────────────
 
     @GetMapping("/medicos")
     public String verMedicos(Model model,
@@ -183,7 +183,7 @@ public class AdminController {
         return "admin/medicos";
     }
 
-    // ✅ EDITAR MÉDICO (FORMULARIO)
+    // EDITAR MÉDICO (FORMULARIO)
     @GetMapping("/medicos/{id}/editar")
     public String editarMedico(@PathVariable Integer id,
                                Model model,
@@ -197,7 +197,7 @@ public class AdminController {
         return "admin/editar-medico";
     }
 
-    // ✅ GUARDAR CAMBIOS DEL MÉDICO
+    // GUARDAR CAMBIOS DEL MÉDICO
     @PostMapping("/medicos/{id}/editar")
     public String guardarEdicionMedico(@PathVariable Integer id,
                                        @RequestParam String nombre,
@@ -212,7 +212,7 @@ public class AdminController {
         return "redirect:/administrador/medicos";
     }
 
-    // ✅ ACTIVAR / DESACTIVAR MÉDICO (PERMISOS)
+    // ACTIVAR / DESACTIVAR MÉDICO (PERMISOS)
     @PostMapping("/medicos/{id}/estado")
     public String cambiarEstadoMedico(@PathVariable Integer id,
                                       RedirectAttributes redirectAttributes) {
@@ -223,7 +223,7 @@ public class AdminController {
         return "redirect:/administrador/medicos";
     }
 
-    // ── 📊 REPORTES ────────────────────────────────────────────────────────────
+    // ── REPORTES ────────────────────────────────────────────────────────────
 
     @GetMapping("/reportes")
     public String reportes(Model model,
@@ -236,7 +236,7 @@ public class AdminController {
         return "admin/reportes";
     }
 
-    // ── ⚙️ CONFIGURACIÓN ───────────────────────────────────────────────────────
+    // ── CONFIGURACIÓN ───────────────────────────────────────────────────────
 
     @GetMapping("/configuracion")
     public String configuracion(Model model,
