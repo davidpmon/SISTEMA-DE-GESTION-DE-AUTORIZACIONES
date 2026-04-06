@@ -99,6 +99,77 @@ public class AdminController {
 
         return "admin/usuarios";
     }
+    // ── 👥 CRUD USUARIOS ─────────────────────────────────────────────────────────
+
+    // FORM CREAR USUARIO
+    @GetMapping("/usuarios/nuevo")
+    public String formularioNuevoUsuario(Model model,
+                                         @AuthenticationPrincipal UserDetails userDetails) {
+
+        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("roles", adminService.listarRoles());
+        model.addAttribute("adminCedula", userDetails.getUsername());
+
+        return "admin/nuevo-usuario";
+    }
+
+    // GUARDAR USUARIO
+    @PostMapping("/usuarios/nuevo")
+    public String guardarUsuario(@RequestParam String nombre,
+                                 @RequestParam String apellido,
+                                 @RequestParam String cedula,
+                                 @RequestParam String correo,
+                                 @RequestParam String telefono,
+                                 @RequestParam String contraseña,
+                                 @RequestParam Integer rolId,
+                                 RedirectAttributes redirectAttributes) {
+
+        adminService.crearUsuario(nombre, apellido, cedula, correo, telefono, contraseña, rolId);
+        redirectAttributes.addFlashAttribute("exito", "Usuario creado correctamente.");
+
+        return "redirect:/administrador/usuarios";
+    }
+
+    // FORM EDITAR USUARIO
+    @GetMapping("/usuarios/{id}/editar")
+    public String formularioEditarUsuario(@PathVariable Integer id,
+                                          Model model,
+                                          @AuthenticationPrincipal UserDetails userDetails) {
+
+        model.addAttribute("usuario", adminService.buscarUsuarioPorId(id));
+        model.addAttribute("roles", adminService.listarRoles());
+        model.addAttribute("adminCedula", userDetails.getUsername());
+
+        return "admin/editar-usuario";
+    }
+
+    // ACTUALIZAR USUARIO
+    @PostMapping("/usuarios/{id}/editar")
+    public String actualizarUsuario(@PathVariable Integer id,
+                                    @RequestParam String nombre,
+                                    @RequestParam String apellido,
+                                    @RequestParam String cedula,
+                                    @RequestParam String correo,
+                                    @RequestParam String telefono,
+                                    @RequestParam Integer rolId,
+                                    RedirectAttributes redirectAttributes) {
+
+        adminService.actualizarUsuario(id, nombre, apellido, cedula, correo, telefono, rolId);
+        redirectAttributes.addFlashAttribute("exito", "Usuario actualizado correctamente.");
+
+        return "redirect:/administrador/usuarios";
+    }
+
+    // ELIMINAR USUARIO
+    @PostMapping("/usuarios/{id}/eliminar")
+    public String eliminarUsuario(@PathVariable Integer id,
+                                  RedirectAttributes redirectAttributes) {
+
+        adminService.eliminarUsuario(id);
+        redirectAttributes.addFlashAttribute("exito", "Usuario eliminado correctamente.");
+
+        return "redirect:/administrador/usuarios";
+    }
 
     // ── 👨‍⚕️ MÉDICOS ───────────────────────────────────────────────────────────
 

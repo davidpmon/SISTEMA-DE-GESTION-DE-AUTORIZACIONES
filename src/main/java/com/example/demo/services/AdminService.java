@@ -2,10 +2,13 @@ package com.example.demo.services;
 
 import com.example.demo.models.OrdenMedica;
 import com.example.demo.models.OrdenMedica.EstadoOrden;
+import com.example.demo.models.Rol;
 import com.example.demo.models.Usuario;
 import com.example.demo.repositories.OrdenMedicaRepository;
+import com.example.demo.repositories.RolRepository;
 import com.example.demo.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -20,6 +23,11 @@ public class AdminService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private RolRepository rolRepository;
+
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     // ── ÓRDENES ────────────────────────────────────────────────────────────────
 
@@ -90,12 +98,63 @@ public class AdminService {
         return usuarioRepository.findByRolNombreRol("Médico");
     }
 
-    // ── 👨‍⚕️ GESTIÓN DE MÉDICOS (NUEVO) ─────────────────────────────────────────
-
     public Usuario buscarUsuarioPorId(Integer id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
     }
+
+    // ── ROLES ─────────────────────────────────────────────────────────────────
+
+    public List<Rol> listarRoles() {
+        return rolRepository.findAll();
+    }
+
+    // ── CRUD USUARIOS ─────────────────────────────────────────────────────────
+
+    public void crearUsuario(String nombre, String apellido, String cedula,
+                             String correo, String telefono, String contraseña, Integer rolId) {
+
+        Rol rol = rolRepository.findById(rolId)
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado con id: " + rolId));
+
+        Usuario usuario = new Usuario();
+        usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        usuario.setCedula(cedula);
+        usuario.setCorreo(correo);
+        usuario.setTelefono(telefono);
+        usuario.setRol(rol);
+
+        // contraseña encriptada
+        usuario.setContraseña(encoder.encode(contraseña));
+
+        usuarioRepository.save(usuario);
+    }
+
+    public void actualizarUsuario(Integer id, String nombre, String apellido, String cedula,
+                                  String correo, String telefono, Integer rolId) {
+
+        Usuario usuario = buscarUsuarioPorId(id);
+
+        Rol rol = rolRepository.findById(rolId)
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado con id: " + rolId));
+
+        usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        usuario.setCedula(cedula);
+        usuario.setCorreo(correo);
+        usuario.setTelefono(telefono);
+        usuario.setRol(rol);
+
+        usuarioRepository.save(usuario);
+    }
+
+    public void eliminarUsuario(Integer id) {
+        Usuario usuario = buscarUsuarioPorId(id);
+        usuarioRepository.delete(usuario);
+    }
+
+    // ── MÉDICOS ────────────────────────────────────────────────────────────────
 
     public void actualizarMedico(Integer id, String nombre, String apellido, String correo, String telefono) {
         Usuario medico = buscarUsuarioPorId(id);
@@ -103,14 +162,8 @@ public class AdminService {
         medico.setNombre(nombre);
         medico.setApellido(apellido);
 
-        // si vienen null, no los pisa (opcional)
-        if (correo != null) {
-            medico.setCorreo(correo);
-        }
-
-        if (telefono != null) {
-            medico.setTelefono(telefono);
-        }
+        if (correo != null) medico.setCorreo(correo);
+        if (telefono != null) medico.setTelefono(telefono);
 
         usuarioRepository.save(medico);
     }
