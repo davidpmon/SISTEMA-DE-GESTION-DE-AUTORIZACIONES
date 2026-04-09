@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Términos y Condiciones de Uso Profesional Médico | MASS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f9fafb;
+            color: #333;
+            font-family: "Segoe UI", sans-serif;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 {
+            color: #004aad;
+            margin-top: 1.5rem;
+        }
+        .container {
+            max-width: 950px;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        p, li {
+            text-align: justify;
+        }
+        ul {
+            margin-bottom: 1rem;
+        }
+        .btn {
+            background-color: #004aad;
+            border: none;
+        }
+        .btn:hover {
+            background-color: #003580;
+        }
+        header {
+            background-color: #004aad;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        header img {
+            height: 90px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 🔹 Encabezado -->
+<header>
+    <div class="d-flex align-items-center">
+        <img th:src="@{/images/logo.png}" alt="Logo MASS">
+        <h5 class="ms-3 mb-0">Sistema de Gestión de Autorizaciones Médicas</h5>
+    </div>
+</header>
+
+<!-- 🔹 Contenedor principal -->
+<div class="container">
+    <h1 class="text-center mb-4">Términos y Condiciones de Uso Profesional Médico de MASS</h1>
+
+    <p>
+        MASS – Sistema de Gestión de Autorizaciones Médicas es una plataforma tecnológica administrada por la EPS correspondiente, destinada exclusivamente al uso profesional de médicos, personal asistencial y administrativo autorizado.
+        El acceso y uso del sistema implica la aceptación expresa de las siguientes condiciones y compromisos éticos y legales.
+
+    </p>
+
+    <h4>1. Uso autorizado</h4>
+    <p>
+        El acceso a MASS es personal, individual e intransferible.
+         Cada usuario es responsable de proteger sus credenciales de acceso y utilizarlas únicamente para fines institucionales, asistenciales o administrativos,
+        de conformidad con lo establecido en el <strong>Artículo 34 del Código de Ética Médica (Ley 23 de 1981)</strong>, que dispone que el médico debe ejercer su profesión con responsabilidad y dentro de los límites de su competencia.
+    </p>
+
+    <h4>2. Confidencialidad y protección de datos</h4>
+    <p>
+        El usuario se compromete a garantizar la confidencialidad, integridad y reserva de toda la información a la que tenga acceso mediante el sistema, especialmente los datos personales y clínicos de los pacientes.
+    </p>
+
+    <p>Esta obligación se fundamenta en:</p>
+    <ul>
+        <li><strong>Ley 1581 de 2012</strong>, artículos 3, 4 y 8, sobre los principios de legalidad, finalidad, libertad, veracidad y seguridad en el tratamiento de datos personales.</li>
+        <li><strong>Decreto 1377 de 2013</strong>,  artículos 10 y 12, que regulan el deber de confidencialidad de quienes traten datos personales.</li>
+        <li><strong>Ley 23 de 1981</strong>, artículos 34, 35 y 37, que obligan al médico a guardar secreto profesional sobre la información del paciente.</li>
+        <li><strong>Resolución 1995 de 1999</strong>, que establecen la reserva de la historia clínica como documento privado, sometido a confidencialidad y solo disponible para el paciente y el personal autorizado.</li>
+    </ul>
+
+    <p>El usuario no podrá divulgar, copiar, transferir o almacenar información fuera de los canales institucionales autorizados por la EPS.</p>
+
+    <h4>3. Ética profesional y conducta laboral</h4>
+    <p>
+        El usuario se compromete a actuar bajo los más altos estándares de ética profesional, transparencia y responsabilidad laboral, conforme a los principios rectores del sector salud y la legislación vigente, incluyendo:
+    </p>
+    <ul>
+        <li><strong>Ley 1164 de 2007</strong>, artículo 1 y 9, sobre el ejercicio ético y responsable de las profesiones del área de la salud.</li>
+        <li><strong>Ley 1438 de 2011</strong>, artículo 2, que establece los principios de calidad, equidad, eficiencia y transparencia en la prestación de servicios de salud.</li>
+        <li><strong>Ley 23 de 1981</strong>,  artículos 1, 2 y 6, que orientan la conducta médica hacia el respeto por la vida, la dignidad y los derechos del paciente.</li>
+    </ul>
+    <p>
+        Toda actuación dentro de MASS debe reflejar integridad, respeto por la dignidad humana y compromiso con la salud del paciente, evitando el uso del sistema con fines ajenos a la atención médica o administrativos legítimos.
+        El incumplimiento de esta disposición podrá considerarse falta grave de carácter ético y disciplinario.
+    </p>
+
+    <h4>4. Responsabilidad y trazabilidad</h4>
+    <p>
+        Todas las acciones realizadas en MASS quedan registradas mediante trazabilidad digital,
+        incluyendo identificación del usuario, fecha, hora, dirección IP y operaciones efectuadas.
+    </p>
+    <p>
+        Con base en la <strong>Ley 527 de 1999</strong> (artículos 2, 7 y 10) y la <strong>Ley 1581 de 2012</strong>,
+        esta información tiene validez jurídica como evidencia digital.
+    </p>
+
+    <h4>5. Cumplimiento y seguridad de la información</h4>
+    <p>
+        La EPS y el proveedor tecnológico aplican medidas técnicas y administrativas conforme al <strong>Decreto 1377 de 2013</strong> y al <strong>Decreto 780 de 2016</strong>.
+        El usuario debe colaborar activamente en el cumplimiento de estas políticas, reportando cualquier incidente de seguridad, acceso no autorizado o irregularidad detectada.
+    </p>
+
+    <h4>6. Consecuencias del incumplimiento</h4>
+    <p>El incumplimiento podrá generar:</p>
+    <ul>
+        <li>Suspensión temporal o definitiva del acceso a MASS.</li>
+        <li>Sanciones disciplinarias según la <strong>Ley 734 de 2002</strong>.</li>
+        <li>Sanciones por violar el secreto profesional (Ley 23 de 1981, arts. 36 y 37).</li>
+        <li>Responsabilidad civil, penal o administrativa (Leyes 1581/2012, 1266/2008, 1273/2009).</li>
+    </ul>
+
+    <h4>7. Aceptación y vigencia</h4>
+    <p>
+        Al hacer clic en “Aceptar”, el usuario declara haber leído, comprendido y aceptado este documento,
+        comprometiéndose a cumplir las normas éticas, legales y de confidencialidad aplicables.
+    </p>
+    <p>
+        Este consentimiento electrónico tiene validez jurídica conforme a la <strong>Ley 527 de 1999</strong> y el <strong>Decreto 2364 de 2012</strong> que reconocen la eficacia de los mensajes de datos y las firmas electrónicas en Colombia.
+    </p>
+
+    <div class="text-center mt-5">
+        <a href="#" class="btn btn-primary px-4"
+           onclick="if (document.referrer) { history.back(); } else { window.location.href='/medico'; } return false;">
+            Volver
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

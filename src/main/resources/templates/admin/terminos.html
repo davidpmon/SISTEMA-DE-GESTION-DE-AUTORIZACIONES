@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Términos y Condiciones de Uso | MASS - Administrador</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f9fafb;
+            color: #333;
+            font-family: "Segoe UI", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        header {
+            background-color: #004aad;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-section img {
+            height: 110px;
+            margin-right: 15px;
+        }
+
+        .container {
+            max-width: 900px;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 50px;
+            margin-bottom: 60px;
+        }
+
+        h1, h2, h3, h4 {
+            color: #004aad;
+            margin-top: 1.5rem;
+        }
+
+        p, li {
+            text-align: justify;
+        }
+
+        ul {
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background-color: #004aad;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #003580;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-section">
+        <img th:src="@{/images/logo.png}" alt="Logo MASS">
+        <h2 class="mb-0">MASS – Sistema de Autorizaciones Médicas</h2>
+    </div>
+</header>
+
+<div class="container">
+    <h1 class="text-center mb-4">Términos y Condiciones de Uso – Administrador</h1>
+    <p class="text-center text-muted">Sistema de Gestión de Autorizaciones Médicas (MASS)</p>
+
+    <h4>Introducción</h4>
+    <p>
+        La plataforma <strong>MASS - Sistema de Gestión de Autorizaciones Médicas</strong> (en adelante “MASS”), administrada por la EPS (en adelante “la EPS”), regula el uso de sus servicios por parte del personal administrativo autorizado.
+        Estos Términos establecen las condiciones bajo las cuales los administradores podrán acceder, operar y gestionar la plataforma, conforme a la legislación colombiana vigente (Ley 1581 de 2012 y Ley 1266 de 2008).
+    </p>
+
+    <h4>Responsable del Tratamiento</h4>
+    <p>
+        La EPS es la responsable del tratamiento de los datos personales almacenados y procesados en MASS.
+        La EPS determina la finalidad, el uso y la conservación de dicha información, asegurando la implementación de medidas de seguridad administrativas y tecnológicas para proteger los datos.
+    </p>
+
+    <h4>Condiciones de Uso</h4>
+    <ul>
+        <li>El uso de MASS por parte del administrador está limitado a las funciones de gestión de usuarios, configuración del sistema, seguimiento de autorizaciones y control de seguridad de la información.</li>
+        <li>El acceso al sistema es personal e intransferible. Queda prohibido compartir credenciales o permitir el acceso de terceros.</li>
+        <li>Cualquier uso indebido del sistema será causal de sanciones disciplinarias y podrá generar responsabilidad civil o penal.</li>
+    </ul>
+
+    <h4>Datos Personales Tratados</h4>
+    <p>
+        El administrador podrá visualizar y gestionar datos personales, médicos y administrativos en cumplimiento de sus funciones, bajo estricta confidencialidad.
+        Está prohibido copiar, divulgar, transferir o almacenar datos personales fuera del entorno autorizado del sistema.
+    </p>
+
+    <h4>Responsabilidades Específicas</h4>
+    <ul>
+        <li>Garantizar la disponibilidad, integridad y confidencialidad de los datos.</li>
+        <li>Administrar usuarios, roles y permisos de acuerdo con la jerarquía institucional.</li>
+        <li>Registrar eventos relevantes en los logs de auditoría.</li>
+        <li>Reportar incidentes de seguridad o accesos indebidos de inmediato al área de protección de datos de la EPS.</li>
+    </ul>
+
+    <h4>Vigencia y Retención de Datos</h4>
+    <p>
+        La información gestionada permanecerá almacenada mientras el sistema MASS esté en funcionamiento o hasta que se cumplan las finalidades autorizadas.
+        En caso de que MASS deje de ser utilizado, los datos serán conservados durante tres (3) meses para respaldo institucional, con posibilidad de anonimización posterior, garantizando que la información no identifique directa ni indirectamente a los titulares.
+    </p>
+
+    <h4>Jurisdicción y Legislación Aplicable</h4>
+    <p>
+        Estos Términos se rigen por las leyes de la República de Colombia. Cualquier disputa será resuelta ante los jueces de <strong>Bogotá D.C.</strong>, conforme a la legislación vigente.
+    </p>
+
+    <div class="text-center mt-5">
+        <a th:href="@{/admin/home}" class="btn btn-primary px-4">Volver al inicio</a>
+    </div>
+</div>
+
+</body>
+</html>

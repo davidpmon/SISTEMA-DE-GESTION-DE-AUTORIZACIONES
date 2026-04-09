@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Términos y Condiciones de Uso | MASS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f9fafb;
+      color: #333;
+      font-family: "Segoe UI", sans-serif;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    header {
+      background-color: #004aad;
+      color: white;
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-section img {
+      height: 130px; /* Ajustar el tamaño del logo aquí */
+      margin-right: 15px;
+    }
+
+    .container {
+      max-width: 900px;
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-top: 50px;
+      margin-bottom: 60px;
+    }
+
+    h1, h2, h3, h4 {
+      color: #004aad;
+      margin-top: 1.5rem;
+    }
+
+    p, li {
+      text-align: justify;
+    }
+
+    ul {
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      background-color: #004aad;
+      border: none;
+    }
+
+    .btn:hover {
+      background-color: #003580;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-section">
+    <img th:src="@{/images/logo.png}" alt="Logo MASS">
+    <h2 class="mb-0">MASS – Sistema de Autorizaciones Médicas</h2>
+  </div>
+</header>
+
+<div class="container">
+  <h1 class="text-center mb-4">Términos y Condiciones de Uso</h1>
+  <p class="text-center text-muted">Sistema de Gestión de Autorizaciones Médicas</p>
+
+  <h4>Introducción</h4>
+  <p>
+    La plataforma MASS - Sistema de Gestión de Autorizaciones Médicas (en adelante “MASS”), administrada por la EPS de Salud (en adelante, “la EPS”), regula el uso de sus servicios y el tratamiento de datos personales conforme a la legislación colombiana vigente (Ley 1581 de 2012 y Ley 1266 de 2008). Al aceptar estos términos y utilizar MASS, usted reconoce que ha leído y entendido las condiciones aquí expuestas y autoriza el tratamiento de sus datos personales para las finalidades descritas.
+  </p>
+
+  <h4>Responsable del Tratamiento</h4>
+  <p>
+    La EPS, identificada con NIT, es la responsable del tratamiento de los datos personales recolectados a través de MASS.
+    La EPS decide sobre la finalidad, uso y conservación de dicha información, y se compromete a protegerla de acuerdo con la Ley 1581 de 2012 y demás normativa aplicable. Para efectos de atención de solicitudes o ejercicio de derechos de los titulares, la EPS indica como domicilio legal la ciudad de Bogotá D.C., Calle ___ No. ___.
+    Como la EPS es la única responsable del tratamiento de los datos personales recolectados y gestionados a través de MASS.
+    El desarrollador o proveedor tecnológico de la plataforma actuará como encargado del tratamiento, limitando su intervención a las funciones técnicas necesarias para la operación del sistema, conforme a las instrucciones de la EPS y bajo los principios de confidencialidad, seguridad y legalidad establecidos por la Ley 1581 de 2012.
+  </p>
+  <p>
+    Como la EPS es la única responsable del tratamiento de los datos personales recolectados y gestionados a través de MASS, el desarrollador o proveedor tecnológico de la plataforma actuará como encargado del tratamiento, limitando su intervención a las funciones técnicas necesarias para la operación del sistema, conforme a las instrucciones de la EPS y bajo los principios de confidencialidad, seguridad y legalidad establecidos por la Ley 1581 de 2012.
+  </p>
+
+  <h4>Condiciones de Uso</h4>
+  <p>
+    El uso de MASS está reservado a usuarios autorizados (pacientes afiliados, profesionales de la salud y personal administrativo de la EPS) que acepten estos Términos y Condiciones.
+    El usuario se compromete a utilizar la plataforma de manera responsable, proporcionando información veraz, actualizada y cumpliendo con las leyes aplicables. Para el personal de la EPS y médicos profesionales de la salud el acceso al sistema es personal e intransferible; el usuario no deberá compartir sus credenciales de acceso ni permitir que terceros utilicen su cuenta de acuerdo a su rol en el sistema.
+    Cualquier uso indebido, fraudulento o ilegal de MASS podrá dar lugar a la interrupción inmediata de la cuenta del usuario y a las responsabilidades civiles o penales que correspondan. El usuario acepta que la EPS realice las verificaciones de seguridad necesarias para proteger la información en el sistema.
+  </p>
+  <p>
+    Cualquier uso indebido, fraudulento o ilegal de MASS podrá dar lugar a la interrupción inmediata de la cuenta del usuario y a las responsabilidades civiles o penales que correspondan.
+    El usuario acepta que la EPS realice las verificaciones de seguridad necesarias para proteger la información en el sistema.
+  </p>
+
+  <h4>Datos Personales Recolectados</h4>
+  <ul>
+    <li><strong>Identificación:</strong> nombre completo, tipo y número de documento de identidad, número de afiliación a la EPS.</li>
+    <li><strong>Datos de contacto:</strong> dirección física, correo electrónico, número de teléfono celular o fijo.</li>
+    <li><strong>Información de salud:</strong> historial de autorizaciones médicas, diagnósticos relevantes, tratamientos o procedimientos realizados, y demás datos clínicos necesarios.</li>
+    <li><strong>Datos de uso del sistema:</strong> registros de actividad (fecha y hora de acceso, IP, configuraciones de cuenta, etc.).</li>
+  </ul>
+
+  <h4>Finalidades del Tratamiento</h4>
+  <p>Los datos personales recolectados serán utilizados para:</p>
+  <ul>
+    <li>Verificar la identidad del usuario y validar su afiliación activa a la EPS.</li>
+    <li>Procesar y gestionar las solicitudes de autorizaciones médicas, así como efectuar el seguimiento interno de dichos trámites.</li>
+    <li>Facilitar la prestación de servicios de salud al afiliado, garantizando agilidad y eficiencia en la atención.</li>
+    <li>Contactar al usuario para notificaciones o comunicaciones relacionadas con las autorizaciones médicas solicitadas (por ejemplo, aprobaciones, rechazos, solicitudes de información adicional).</li>
+    <li>Cumplir con obligaciones legales y regulatorias en materia de salud y seguridad social (reportes a autoridades de salud, auditorías, entre otros).</li>
+    <li>AAnalizar estadísticamente la operación de MASS para mejorar la calidad, seguridad y funcionalidad de la plataforma.</li>
+  </ul>
+  <p>
+    Los datos personales podrán ser anonimizados para el desarrollo de análisis estadísticos, estudios internos o mejoras del servicio, garantizando que la información resultante no permita la identificación directa ni indirecta de los titulares.
+  </p>
+
+  <h4>Consentimiento Informado</h4>
+  <p>
+    La EPS recoge y trata los datos personales con el consentimiento previo, expreso e informado del usuario, tal como exige la Ley 1581 de 2012.
+    Al aceptar estos Términos y proporcionar sus datos en MASS, el usuario otorga autorización a la EPS para que los utilice con las finalidades descritas en este documento.
+    El usuario puede revocar su consentimiento en cualquier momento mediante solicitud escrita a la EPS, sin que ello afecte la legalidad de los tratamientos realizados con anterioridad a la revocación.
+    La revocación del consentimiento no interrumpe la autorización en casos en que el tratamiento sea permitido por ley sin consentimiento (por ejemplo, datos públicos, emergencias médicas, etc.).
+  </p>
+
+  <h4>Derechos del Titular de los Datos</h4>
+  <p>
+    De conformidad con la Ley 1581 de 2012 y la Ley 1266 de 2008 (habeas data), el usuario o titular de los datos tiene derecho a:
+  </p>
+  <ul>
+    <li>Acceder a sus datos personales y conocer las condiciones del tratamiento.</li>
+    <li>Rectificar o actualizar su información si es inexacta o desactualizada.</li>
+    <li>Solicitar la supresión de datos cuando no sean necesarios o se traten de forma contraria a la ley.</li>
+    <li>Revocar la autorización otorgada.</li>
+    <li>Presentar quejas ante la EPS o la Superintendencia de Industria y Comercio.</li>
+  </ul>
+  <p>
+    Para ejercer estos derechos, el usuario debe enviar la solicitud por escrito a la EPS empleando los canales de contacto indicados en este documento. La EPS atenderá la solicitud conforme a los plazos y procedimientos establecidos por la ley, brindando respuesta gratuita en el término máximo permitido.
+    En este caso según la ley 1581 del 2012 para consultas el término máximo establecido son de 10 días hábiles, si no es posible responder dentro de ese tiempo, la EPS debe informar al usuario el motivo del retraso y tendrá 5 días hábiles adicionales para dar respuesta definitiva;
+    Para reclamaciones el plazo máximo de respuesta será de 15 días hábiles y si la EPS necesita más tiempo, debe informar al titular antes de vencer ese plazo y podrá extender el término por 8 días hábiles adicionales (Art. 14 - 16 Ley 1581 de 2012).
+  </p>
+
+  <h4>Propiedad Intelectual</h4>
+  <p>
+    Todos los derechos de propiedad intelectual sobre la plataforma MASS —incluidos su software, código fuente, diseño, estructura, arquitectura, interfaz y documentación técnica— pertenecen en forma exclusiva a su desarrollador, quien conserva la plena titularidad sobre los mismos.
+    La EPS cuenta únicamente con una licencia de uso no exclusiva, limitada, intransferible y revocable, otorgada para operar la plataforma MASS en el marco de sus funciones institucionales y conforme a los presentes Términos y Condiciones.
+  </p>
+
+  <h4>Responsabilidad y Limitaciones</h4>
+  <p>
+    La EPS asume plena responsabilidad por el cumplimiento de las disposiciones legales en materia de protección de datos personales y tratamiento de información sensible, garantizando que cualquier tercero que actúe como encargado (incluido el proveedor de MASS) cumpla con las obligaciones derivadas de la Ley 1581 de 2012, el Decreto 1377 de 2013 y la Ley 1266 de 2008.
+    Para esto la EPS ha implementado medidas técnicas, administrativas y organizativas razonables para proteger la información tratada en el sistema MASS y garantizar su disponibilidad, confidencialidad e integridad.
+    No obstante, el usuario reconoce que ningún sistema tecnológico es completamente infalible y que pueden presentarse interrupciones o errores derivados de factores externos, como fallas en la red, mantenimiento, ataques informáticos o eventos de fuerza mayor.
+    En consecuencia, la EPS no será responsable por daños indirectos, lucro cesante o perjuicios derivados de tales eventos ajenos a su control.
+    Sin embargo, mantendrá su deber legal de proteger los datos personales conforme a la Ley 1581 de 2012 y adoptará las acciones necesarias para mitigar los efectos de cualquier incidente de seguridad.
+    El uso del sistema MASS implica la aceptación de estas condiciones.
+    La EPS responderá únicamente por daños directos comprobables atribuibles a falla demostrada de su gestión, dentro de los límites permitidos por la ley y hasta la cuantía efectivamente indemnizada.
+    En caso de detectarse un incidente de seguridad que comprometa los datos personales, la EPS notificará al administrador del sistema y, cuando sea aplicable, a los titulares afectados, conforme al artículo 17 de la Ley 1581 de 2012 y las directrices de la SIC.
+
+  </p>
+
+  <h4>Modificaciones a los Términos</h4>
+  <p>
+    La EPS se reserva el derecho de modificar estos Términos y Condiciones en cualquier momento.
+    Cualquier cambio será publicado en MASS o comunicado al usuario por correo electrónico u otros medios de contacto registrados. Las modificaciones entrarán en vigencia a partir de la fecha indicada en la notificación correspondiente.
+    El uso continuado de MASS después de la actualización de los Términos constituirá la aceptación de las nuevas condiciones. Es responsabilidad del usuario revisar periódicamente este documento y mantenerse informado sobre las modificaciones.
+
+  </p>
+
+  <h4>Vigencia y Retención de Datos</h4>
+  <p>
+    Estos Términos y Condiciones estarán vigentes mientras el usuario utilice MASS o mientras existan obligaciones derivadas de su uso.
+    La EPS conservará los datos personales únicamente durante el tiempo necesario para cumplir con las finalidades autorizadas y conforme a los plazos legales aplicables.
+    En cumplimiento de la Resolución 1995 de 1999, el Decreto 780 de 2016 y demás normativas vigentes:
+  </p>
+  <ul>
+    <li><strong>Historias clínicas:</strong> 20 años desde la última atención médica.</li>
+    <li><strong>Autorizaciones médicas:</strong> 10 años tras la finalización del trámite.</li>
+    <li><strong>Registros técnicos:</strong> hasta 5 años para control y seguridad.</li>
+    <li><strong>En caso de cierre del servicio:</strong> los datos se conservarán 3 meses antes de ser eliminados o anonimizados.</li>
+  </ul>
+  <p>
+    Cumplidos los plazos de conservación o finalizada la finalidad del tratamiento, los datos serán eliminados, bloqueados o anonimizados, garantizando la confidencialidad, seguridad y privacidad del titular.
+    La anonimización constituye una medida válida adoptada por la EPS para conservar información con fines estadísticos, de investigación, históricos o de mejora del sistema, asegurando que no sea posible identificar directa ni indirectamente a los titulares de los datos.
+    La EPS cumplirá en todo momento con los principios de finalidad, confidencialidad, seguridad y temporalidad, conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013, aplicando medidas técnicas y organizativas adecuadas para evitar accesos no autorizados o tratamientos indebidos.
+    En caso de que el servicio MASS deje de ser utilizado dentro de la EPS correspondiente, la información almacenada en el sistema será conservada por un período mínimo de tres (3) meses contados a partir de la fecha de terminación del servicio o desactivación del sistema.
+    Durante este plazo, la EPS garantizará la integridad y confidencialidad de los datos, con el fin de permitir auditorías, verificaciones o respaldo institucional.
+    Transcurrido dicho término, la información será eliminada de forma segura o sometida a un proceso de anonimización, de modo que no sea posible identificar directa ni indirectamente a los titulares de los datos, conforme a los principios de temporalidad, finalidad y confidencialidad establecidos en la Ley 1581 de 2012 y el Decreto 1377 de 2013.
+  </p>
+
+  <h4>Jurisdicción y Legislación Aplicable</h4>
+  <p>
+    Estos Términos y Condiciones se rigen por las leyes de la República de Colombia.
+    Cualquier controversia o reclamo que surja del uso de MASS será sometido a los jueces y tribunales competentes de Bogotá D.C, renunciando las partes a cualquier otro fuero que pudiera corresponderles.
+  </p>
+
+  <h4>Canales de Contacto</h4>
+  <ul>
+    <li><strong>Correo electrónico:</strong> smurillo95@uan.edu.co</li>
+    <li><strong>Teléfono:</strong> (+57) 3124615724</li>
+    <li><strong>Dirección postal:</strong> 111031 Bogotá D.C., Colombia</li>
+    <li><strong>Formularios en línea:</strong> Sección “Protección de Datos” o “Contáctenos” en la web oficial de la EPS.</li>
+  </ul>
+
+  <h4>Aceptación de los Términos</h4>
+  <p>
+    Al utilizar el sistema MASS, el usuario declara haber leído, comprendido y aceptado en su totalidad los presentes Términos y Condiciones, así como la Política de Privacidad aplicable.
+    Para continuar, el usuario deberá marcar la casilla o hacer clic en el botón de aceptación correspondiente. Dicha acción constituye su consentimiento libre, previo, expreso e informado para el uso del sistema y el tratamiento de sus datos personales, conforme a la Ley 1581 de 2012, sus decretos reglamentarios y demás normas concordantes.
+    La manifestación de aceptación realizada por medios electrónicos tendrá plena validez jurídica de acuerdo con la Ley 527 de 1999 y el Decreto 2364 de 2012, que reconocen eficacia probatoria y fuerza obligatoria a los mensajes de datos y firmas electrónicas.
+    En caso de que el usuario no esté de acuerdo con alguno de los términos aquí establecidos, no se autorizará su acceso ni el uso de MASS o de sus servicios asociados.
+    El presente documento constituye un acuerdo legalmente vinculante entre el usuario y la EPS respecto al uso del sistema MASS.
+  </p>
+
+  <div class="text-center mt-5">
+    <a href="/" class="btn btn-primary px-4">Volver al inicio</a>
+  </div>
+</div>
+
+</body>
+</html>

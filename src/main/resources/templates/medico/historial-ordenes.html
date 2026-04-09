@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Historial de Órdenes Médicas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<!-- Navbar -->
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #004aad;">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/medico}">
+                <img th:src="@{/images/logo.png}" alt="Logo MASS" style="height: 40px; margin-right: 10px;">
+                MASS - Módulo Médico
+            </a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/medico/historial}">Historial Clínico</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/medico/ordenes}">Órdenes Médicas</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/medico/ordenes/historial-ordenes}">Historial de Órdenes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Contenido principal -->
+<main class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header text-white" style="background-color: #004aad;">
+            <h4 class="mb-0">Historial de Órdenes Médicas Realizadas</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="o : ${ordenes}">
+                    <td th:text="${#temporals.format(o.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${#strings.abbreviate(o.descripcion, 80)}"></td>
+                    <td>
+                        <span th:classappend="${
+                            o.estado.name() == 'APROBADA' ? 'badge bg-success' :
+                            (o.estado.name() == 'RECHAZADA' ? 'badge bg-danger' :
+                            (o.estado.name() == 'EN_REVISION' ? 'badge bg-warning text-dark' : 'badge bg-secondary'))
+                        }"
+                              th:text="${o.estado}">
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm"
+                                th:attr="onclick=|verDetalleOrden(${o.idOrden})|">
+                            Ver Detalle
+                        </button>
+                    </td>
+                </tr>
+                <tr th:if="${ordenes.isEmpty()}">
+                    <td colspan="4" class="text-center text-muted">No hay órdenes registradas</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="javascript:history.back()" class="btn btn-primary px-4">Volver</a>
+    </div>
+</main>
+
+<!-- Modal Detalle -->
+<div class="modal fade" id="detalleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Detalle de Orden Médica</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Fecha:</strong> <span id="fechaOrden"></span></p>
+                <p><strong>Paciente:</strong> <span id="pacienteOrden"></span></p>
+                <p><strong>Diagnóstico:</strong> <span id="diagnosticoOrden"></span></p>
+                <p><strong>Descripción:</strong></p>
+                <p id="descripcionOrden" class="border rounded p-2 bg-light"></p>
+                <p><strong>Estado actual:</strong> <span id="estadoOrden" class="badge bg-secondary"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center py-4">
+    <div class="container">
+        <p>© 2025 MASS | Sistema de Autorizaciones Médicas</p>
+        <p><a href="#">Política de privacidad</a> · <a href="/medico/terminos">Términos</a></p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    async function verDetalleOrden(id) {
+        try {
+            const response = await fetch(`/medico/ordenes/${id}/detalle`);
+            const data = await response.json();
+
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+
+            document.getElementById("fechaOrden").textContent = new Date(data.fecha).toLocaleString();
+            document.getElementById("pacienteOrden").textContent = data.paciente;
+            document.getElementById("diagnosticoOrden").textContent = data.diagnostico || "No registrado";
+            document.getElementById("descripcionOrden").textContent = data.descripcion;
+            document.getElementById("estadoOrden").textContent = data.estado;
+
+            const modal = new bootstrap.Modal(document.getElementById('detalleModal'));
+            modal.show();
+
+        } catch (error) {
+            console.error("Error al obtener detalle:", error);
+            alert("Error al cargar la información de la orden.");
+        }
+    }
+</script>
+
+</body>
+</html>

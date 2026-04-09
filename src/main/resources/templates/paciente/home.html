@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home · Sistema</title>
+
+    <!-- Bootstrap local -->
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos personalizados del carousel -->
+    <link href="/css/carousel.css" rel="stylesheet">
+</head>
+<body>
+<header data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sistema</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Enlace</a></li>
+                    <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Deshabilitado</a></li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <!-- Carrusel -->
+    <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                     role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)"/>
+                </svg>
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h1>Bienvenido Paciente</h1>
+                        <p class="opacity-75">Este es tu panel principal después de iniciar sesión.</p>
+                        <p><a class="btn btn-lg btn-primary" href="/logout">Cerrar sesión</a></p>
+                    </div>
+                </div>
+            </div>
+            <!--slides -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    ```
+    <!-- Sección marketing -->
+    <div class="container marketing">
+        <div class="row">
+            <div class="col-lg-4">
+                <h2 class="fw-normal">Módulo 1</h2>
+                <p>Estado de autorizaciones.</p>
+                <p><a class="btn btn-secondary" href="#">Ver detalles &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+                <h2 class="fw-normal">Módulo 2</h2>
+                <p>Carga de nuevos documentos.</p>
+                <p><a class="btn btn-secondary" href="#">Ver detalles &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+                <h2 class="fw-normal">Módulo 3</h2>
+                <p>Peticiones de documentos.</p>
+                <p><a class="btn btn-secondary" href="#">Ver detalles &raquo;</a></p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- Footer -->
+    <footer class="container">
+        <p class="float-end"><a href="#">Volver arriba</a></p>
+        <p>&copy; 2025 Mi Compañía &middot; <a href="#">Privacidad</a> &middot; <a href="#">Términos</a></p>
+    </footer>
+    ```
+
+</main>
+
+<!-- Bootstrap JS local -->
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

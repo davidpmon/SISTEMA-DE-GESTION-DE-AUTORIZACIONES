@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Módulo Autorizador | MASS</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f9fafb;
+            color: #333;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        header {
+            background-color: #004aad;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .navbar img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #d6e4ff !important;
+        }
+
+        #myCarousel {
+            margin-top: 70px;
+        }
+
+        .carousel-item {
+            background-color: #004aad;
+            color: white;
+            height: 300px;
+        }
+
+        .carousel-caption h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .container.marketing {
+            background: #fff;
+            padding: 50px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 40px;
+        }
+
+        .col-lg-4, .col-lg-6 {
+            padding: 20px;
+        }
+
+        h2.fw-normal {
+            color: #004aad;
+        }
+
+        .btn-secondary {
+            background-color: #004aad;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #003580;
+        }
+
+        footer {
+            margin-top: 80px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #004aad;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .featurette-divider {
+            margin: 4rem 0;
+        }
+
+        /* 🔹 Modal de términos */
+        #modalTerminos {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        #modalTerminos.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        #modalTerminos .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 🔹 Modal de Términos y Condiciones -->
+<div id="modalTerminos">
+    <div class="modal-content">
+        <h4 class="mb-3">Términos y Condiciones de Uso</h4>
+        <p class="mb-4">
+            Al usar <strong>MASS - Módulo Autorizador</strong>, aceptas nuestros
+            <a th:href="@{/terminos/autorizador}" target="_blank" style="color:#004aad; text-decoration:underline;">
+                Términos y Condiciones de servicio
+            </a>.
+        </p>
+        <button id="btnAceptarTerminos" class="btn btn-primary px-4">Aceptar</button>
+    </div>
+</div>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/autorizador/home}">
+                <img th:src="@{/images/logo.png}" alt="Logo MASS">
+                MASS - Módulo Autorizador
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/autorizador/home}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/pendientes}">Órdenes Pendientes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/aprobadas}">Órdenes Aprobadas</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/rechazadas}">Órdenes Rechazadas</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/historial}">Historial</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/autorizador/perfil}">Mi Perfil</a></li>
+                </ul>
+                <form class="d-flex ms-md-3" th:action="@{/logout}" method="post">
+                    <button class="btn btn-outline-light" type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active d-flex align-items-center justify-content-center">
+                <div class="carousel-caption text-center">
+                    <h1>Bienvenido al Módulo Autorizador</h1>
+                    <p class="opacity-75">Seleccione un módulo para continuar con sus tareas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container marketing text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-4">
+                <h2 class="fw-normal">Autorización de Órdenes</h2>
+                <p>Revise, autorice o solicite correcciones a las órdenes.</p>
+                <p><a class="btn btn-secondary px-4" th:href="@{/autorizador/pendientes}">Ver detalles &raquo;</a></p>
+            </div>
+
+            <div class="col-lg-4">
+                <h2 class="fw-normal">Historial de Autorizaciones</h2>
+                <p>Visualice el registro histórico de todas las órdenes procesadas.</p>
+                <p><a class="btn btn-secondary px-4" th:href="@{/autorizador/historial}">Ver detalles &raquo;</a></p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <footer class="container text-center">
+        <p class="float-end"><a href="#">Volver arriba</a></p>
+        <p>&copy; 2025 MASS – Todos los Derechos reservados &middot;
+            <a href="#">Privacidad</a> &middot;
+            <a th:href="@{/terminos/autorizador}">Términos</a></p>
+    </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 🔹 Script funcional del modal -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("modalTerminos");
+        const btnAceptar = document.getElementById("btnAceptarTerminos");
+        const acepto = sessionStorage.getItem("aceptoTerminosAutorizador");
+
+        if (!acepto) {
+            modal.classList.add("show");
+        }
+
+        btnAceptar.addEventListener("click", () => {
+            sessionStorage.setItem("aceptoTerminosAutorizador", "true");
+            modal.classList.remove("show");
+            setTimeout(() => modal.remove(), 400);
+        });
+    });
+</script>
+
+</body>
+</html>

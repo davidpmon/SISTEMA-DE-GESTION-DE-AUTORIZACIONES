@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-5">
+
+<h1>Bienvenido Usuario</h1>
+<p>Has iniciado sesión correctamente.</p>
+
+<!-- Botón de logout con POST -->
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn btn-danger">Cerrar sesión</button>
+</form>
+
+</body>
+</html>
+
