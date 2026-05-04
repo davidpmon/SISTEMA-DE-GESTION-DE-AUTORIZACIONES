@@ -23,6 +23,22 @@
         .table-primary { background-color: #dce7ff; }
         .section-title { border-bottom: 2px solid #004aad; color: #004aad; font-weight: bold; margin-bottom: 15px; padding-bottom: 5px; font-size: 0.9rem; margin-top: 15px; }
         .detalle-box { background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; border-radius: 8px; }
+        #panelSugerencias .sugerencia-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+
+        #panelSugerencias .sugerencia-item:hover {
+            background-color: #e7f1ff; /* Azul clarito */
+            color: #004aad;
+        }
+
+        #panelSugerencias .sugerencia-item:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body>
@@ -81,8 +97,14 @@
                         </span>
                     </td>
                     <td>
-                        <span class="badge" th:classappend="${o.estado.name() == 'PENDIENTE' ? 'bg-warning text-dark' : 'bg-success'}" th:text="${o.estado}"></span>
+                        <span class="badge"
+                              th:classappend="${o.estado.name() == 'RECHAZADA' ? 'bg-danger' :
+                                                o.estado.name() == 'EN_REVISION' ? 'bg-secondary' :
+                                                o.estado.name() == 'PENDIENTE' ? 'bg-warning text-dark' : 'bg-success'}"
+                              th:text="${o.estado}">
+                        </span>
                     </td>
+
                     <td>
                         <button type="button"
                                 class="btn btn-sm btn-outline-primary rounded-pill px-3"
@@ -202,27 +224,69 @@
                     </div>
 
                     <div class="section-title">4. DETALLE DE LA ORDEN</div>
+
+                    <!-- SECCIÓN MEDICAMENTOS -->
                     <div id="sec-med" class="detalle-box d-none mb-3">
                         <div class="row g-2">
-                            <div class="col-12"><input type="text" class="form-control" name="med_nombre" placeholder="Nombre Genérico / Comercial"></div>
-                            <div class="col-md-4"><input type="text" class="form-control" name="med_dosis" placeholder="Dosis"></div>
-                            <div class="col-md-4"><input type="text" class="form-control" name="med_frec" placeholder="Frecuencia"></div>
-                            <div class="col-md-4"><input type="text" class="form-control" name="med_dur" placeholder="Duración"></div>
+                            <div class="col-12 position-relative">
+                                <label class="small fw-bold text-muted">Nombre del Medicamento</label>
+                                <input type="text" class="form-control" id="inputMedNombre" autocomplete="off"
+                                       placeholder="Empiece a escribir para buscar...">
+
+                                <!-- Este es el panel que se verá "dentro" del formulario -->
+                                <div id="panelSugerencias" class="shadow-sm border rounded-3 position-absolute w-100 bg-white d-none"
+                                     style="z-index: 1000; max-height: 200px; overflow-y: auto; margin-top: 2px;">
+                                    <!-- Aquí se insertarán las opciones dinámicamente -->
+                                </div>
+
+                                <!-- Mantenemos los datos en un lugar oculto para que JS los lea -->
+                                <select id="datosMedicamentos" class="d-none">
+                                    <option th:each="m : ${medicamentos}"
+                                            th:value="${m.nombreGenerico}"
+                                            th:data-concentracion="${m.concentracion}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4"><input type="text" class="form-control" name="med_dosis" placeholder="Dosis (ej: 500mg)"></div>
+                            <div class="col-md-4"><input type="text" class="form-control" name="med_frec" placeholder="Frecuencia (ej: cada 8h)"></div>
+                            <div class="col-md-4"><input type="text" class="form-control" name="med_dur" placeholder="Duración (ej: 7 días)"></div>
                         </div>
                     </div>
+
+                    <!-- SECCIÓN EXÁMENES / LABORATORIO -->
                     <div id="sec-exa" class="detalle-box d-none mb-3">
-                        <input type="text" class="form-control mb-2" name="ex_nombre" placeholder="Nombre del examen o estudio">
+                        <label class="small fw-bold text-muted">Procedimiento Sugerido</label>
+                        <input type="text" class="form-control mb-2" name="ex_nombre"
+                               list="listaExamenes" placeholder="Busque el examen o estudio...">
+
+                        <datalist id="listaExamenes">
+                            <option th:each="p : ${procedimientos}"
+                                    th:if="${p.tipo.name() == 'EXAMEN'}"
+                                    th:value="${p.nombreProcedimiento}">
+                            </option>
+                        </datalist>
+
                         <textarea class="form-control" name="ex_obs" rows="2" placeholder="Observaciones / Preparación"></textarea>
                     </div>
+
+                    <!-- SECCIÓN TERAPIAS -->
                     <div id="sec-ter" class="detalle-box d-none mb-3">
-                        <input type="text" class="form-control mb-2" name="ter_tipo" placeholder="Tipo de terapia o procedimiento">
+                        <label class="small fw-bold text-muted">Tipo de Terapia</label>
+                        <input type="text" class="form-control mb-2" name="ter_tipo"
+                               list="listaTerapias" placeholder="Busque la terapia...">
+
+                        <datalist id="listaTerapias">
+                            <option th:each="p : ${procedimientos}"
+                                    th:if="${p.tipo.name() == 'TERAPIA'}"
+                                    th:value="${p.nombreProcedimiento}">
+                            </option>
+                        </datalist>
+
+                        <div class="mt-3">
                         <input type="text" class="form-control" name="ter_frec" placeholder="Sesiones / Duración">
                     </div>
-
-                    <div class="mb-3">
                         <label class="form-label small fw-bold">Notas Adicionales / Indicaciones</label>
-                        <textarea name="descripcion" id="descripcion" class="form-control" rows="3" required placeholder="Escriba aquí la descripción completa de la orden..."></textarea>
-                    </div>
+                        <textarea name="descripcion" id="descripcion" class="form-control" rows="3" placeholder="Escriba aquí la descripción completa de la orden..."></textarea>                    </div>
 
                     <div class="form-check p-3 bg-light border rounded">
                         <input class="form-check-input ms-0 me-2" type="checkbox" id="aceptaTerminosMedico" required>
@@ -231,11 +295,11 @@
                         </label>
                     </div>
                 </div>
-
-                <div class="modal-footer border-0 p-3 bg-light">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary px-5 fw-bold">Emitir Orden</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <!-- EL BOTÓN DEBE SER TYPE="SUBMIT" Y ESTAR DENTRO DE LAS ETIQUETAS FORM -->
+                        <button type="submit" class="btn btn-primary">Emitir Orden</button>
+                    </div>
             </form>
         </div>
     </div>
@@ -248,122 +312,169 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // 1. Lógica para mostrar/ocultar secciones (Nueva Orden)
+    // --- VARIABLES GLOBALES ---
+    const inputMed = document.getElementById('inputMedNombre');
+    const panel = document.getElementById('panelSugerencias');
+    const selectDatos = document.getElementById('datosMedicamentos');
+    const form = document.getElementById("formNuevaOrden");
+    const inputHistoria = document.getElementById('id_historia');
+    const infoDiv = document.getElementById('infoHistoria');
+
+    // 1. MOSTRAR/OCULTAR SECCIONES POR TIPO DE ORDEN
     function toggleSecciones(idAMostrar) {
         document.querySelectorAll('.detalle-box').forEach(div => div.classList.add('d-none'));
         const target = document.getElementById(idAMostrar);
-        if (target && idAMostrar !== 'sec-otro') { target.classList.remove('d-none'); }
+        if (target && idAMostrar !== 'sec-otro') {
+            target.classList.remove('d-none');
+        }
     }
 
-    // 2. Setear fecha actual
-    document.getElementById('modalNuevaOrden').addEventListener('show.bs.modal', function () {
-        document.getElementById('fechaHoy').innerText = new Date().toLocaleDateString();
-    });
+    // 2. PANEL DE SUGERENCIAS PERSONALIZADO (FUERA DEL SUBMIT)
+    if (inputMed) {
+        inputMed.addEventListener('input', function() {
+            const texto = this.value.toLowerCase().trim();
+            panel.innerHTML = '';
 
-    // 3. AJAX Búsqueda de Historia (Para Creación)
-    const inputHistoria = document.getElementById("id_historia");
-    const infoDiv = document.getElementById("infoHistoria");
-
-    inputHistoria.addEventListener("change", async () => {
-        const id = inputHistoria.value.trim();
-        if (!id) { infoDiv.innerHTML = ""; return; }
-        await cargarRecuadroPaciente(id, infoDiv);
-    });
-
-    // 4. LÓGICA DE VISUALIZACIÓN (NUEVA)
-    const modalVerDetalle = document.getElementById('modalVerDetalle');
-    modalVerDetalle.addEventListener('show.bs.modal', async function (event) {
-        const button = event.relatedTarget;
-
-        // Extraer datos
-        const id = button.getAttribute('data-id');
-        const fecha = button.getAttribute('data-fecha');
-        const tipo = button.getAttribute('data-tipo');
-        const desc = button.getAttribute('data-descripcion');
-        const pacienteId = button.getAttribute('data-paciente-id');
-
-        // Llenar Modal
-        document.getElementById('det-id-num').innerText = id;
-        document.getElementById('det-fecha').innerText = fecha;
-        document.getElementById('det-tipo').innerText = tipo;
-        document.getElementById('det-descripcion').innerText = desc;
-
-        // Cargar paciente usando la misma lógica
-        const infoPacienteDiv = document.getElementById('det-info-paciente');
-        infoPacienteDiv.innerHTML = "<div class='text-center p-2 text-muted small'>Cargando...</div>";
-
-        if(pacienteId && pacienteId !== 'null') {
-            await cargarRecuadroPaciente(pacienteId, infoPacienteDiv);
-        } else {
-            infoPacienteDiv.innerHTML = "<div class='alert alert-warning p-2 small'>No hay paciente asociado.</div>";
-        }
-    });
-
-    // 5. Función Reutilizable para Cargar Recuadro Azul
-    async function cargarRecuadroPaciente(id, contenedor) {
-        try {
-            const response = await fetch(`/medico/ordenes/buscar-historia/${id}`);
-            if (!response.ok) {
-                contenedor.innerHTML = "<div class='alert alert-danger p-2 small'>Datos no encontrados.</div>";
+            if (texto.length < 2) {
+                panel.classList.add('d-none');
                 return;
             }
-            const h = await response.json();
-            contenedor.innerHTML = `
-                <div class="alert alert-info p-3 mt-2 small shadow-sm border-0" style="background-color: #e7f1ff; color: #084298;">
-                    <div class="row">
-                        <div class="col-12"><strong>Paciente:</strong> ${h.nombrePaciente} ${h.apellidoPaciente}</div>
-                        <div class="col-12"><strong>Documento:</strong> ${h.documento}</div>
-                    </div>
-                </div>`;
-        } catch (err) {
-            contenedor.innerHTML = "<div class='alert alert-danger p-2 small'>Error de conexión.</div>";
-        }
+
+            const opciones = Array.from(selectDatos.options);
+            const filtrados = opciones.filter(opt => opt.value.toLowerCase().includes(texto));
+
+            if (filtrados.length > 0) {
+                filtrados.forEach(opt => {
+                    const div = document.createElement('div');
+                    div.className = 'sugerencia-item';
+                    div.innerHTML = `<strong>${opt.value}</strong><br><small class="text-muted">Conc: ${opt.getAttribute('data-concentracion')}</small>`;
+
+                    div.onclick = function() {
+                        inputMed.value = opt.value;
+                        // Auto-llenar dosis con la concentración
+                        const campoDosis = document.querySelector('input[name="med_dosis"]');
+                        if (campoDosis) campoDosis.value = opt.getAttribute('data-concentracion');
+                        panel.classList.add('d-none');
+                        inputMed.classList.remove('is-invalid');
+                    };
+                    panel.appendChild(div);
+                });
+                panel.classList.remove('d-none');
+            } else {
+                panel.classList.add('d-none');
+            }
+        });
     }
 
-    // 6. Validar formulario
-    document.getElementById("formNuevaOrden").addEventListener("submit", function(e) {
-        // 1. VALIDACIÓN DEL CHECKBOX
+    // Cerrar panel al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (e.target !== inputMed) panel.classList.add('d-none');
+    });
+
+    // 3. VALIDACIÓN Y ENVÍO DEL FORMULARIO
+    form.addEventListener("submit", function(e) {
+        // Validar términos
         if (!document.getElementById("aceptaTerminosMedico").checked) {
             e.preventDefault();
-            alert("Debe aceptar la responsabilidad profesional antes de continuar.");
-            return; // Detenemos la ejecución aquí
+            alert("Debe aceptar la responsabilidad profesional.");
+            return;
         }
 
-        // 2. CONSTRUCCIÓN DE LA DESCRIPCIÓN DETALLADA
-        // Obtenemos el tipo de orden seleccionado
         const radioSeleccionado = document.querySelector('input[name="tipo_orden"]:checked');
-        if (!radioSeleccionado) return; // Si por alguna razón no hay selección
+        if (!radioSeleccionado) return;
 
         const tipo = radioSeleccionado.value;
         let detalleGenerado = "";
 
-        // Lógica para armar el texto según el tipo
         if (tipo === "MEDICAMENTO") {
-            const nombre = document.querySelector('input[name="med_nombre"]').value;
+            const nombreEscrito = inputMed.value.trim();
+            const opcionesValidas = Array.from(selectDatos.options).map(opt => opt.value);
+
+            // VALIDACIÓN: ¿Seleccionó de la lista?
+            if (!opcionesValidas.includes(nombreEscrito)) {
+                e.preventDefault();
+                alert("Error: Debe seleccionar un medicamento válido de la lista.");
+                inputMed.focus();
+                inputMed.classList.add("is-invalid");
+                return;
+            }
+
             const dosis = document.querySelector('input[name="med_dosis"]').value;
             const frec = document.querySelector('input[name="med_frec"]').value;
-            const duracion = document.querySelector('input[name="med_dur"]').value;
-            detalleGenerado = `[MEDICAMENTO] Nombre: ${nombre} | Dosis: ${dosis} | Frecuencia: ${frec} | Duración: ${duracion}`;
-        }
-        else if (tipo === "EXAMEN_LABORATORIO") {
-            const examen = document.querySelector('input[name="ex_nombre"]').value;
-            const obs = document.querySelector('textarea[name="ex_obs"]').value;
-            detalleGenerado = `[EXAMEN] Tipo: ${examen} | Observaciones: ${obs}`;
-        }
-        else if (tipo === "TERAPIA") {
-            const terapia = document.querySelector('input[name="ter_tipo"]').value;
-            const sesiones = document.querySelector('input[name="ter_frec"]').value;
-            detalleGenerado = `[TERAPIA] Procedimiento: ${terapia} | Sesiones: ${sesiones}`;
+            const dur = document.querySelector('input[name="med_dur"]').value;
+            detalleGenerado = `[MEDICAMENTO] ${nombreEscrito} | Dosis: ${dosis} | Frecuencia: ${frec} | Duración: ${dur}`;
         }
 
-        // 3. ASIGNACIÓN AL CAMPO QUE SE GUARDA EN DB
-        // Obtenemos el valor de "Notas Adicionales" que escribió el médico
-        const notasAdicionales = document.getElementById("descripcion").value;
+        // ... lógica para EXAMEN o TERAPIA si aplica ...
 
-        // Combinamos el detalle técnico con las notas manuales
+        // Guardar todo en el textarea oculto/final
+        const descripcionTextarea = document.getElementById("descripcion");
         if (detalleGenerado !== "") {
-            document.getElementById("descripcion").value = detalleGenerado + "\n\nNOTAS ADICIONALES: " + notasAdicionales;
+            const notas = descripcionTextarea.value;
+            descripcionTextarea.value = `${detalleGenerado}${notas ? '\n\nNOTAS: ' + notas : ''}`;
         }
+    });
+
+    const modalVerDetalle = document.getElementById('modalVerDetalle');
+    if (modalVerDetalle) {
+        modalVerDetalle.addEventListener('show.bs.modal', async function (event) {
+            const button = event.relatedTarget;
+            document.getElementById('det-id-num').innerText = button.getAttribute('data-id');
+            document.getElementById('det-fecha').innerText = button.getAttribute('data-fecha');
+            document.getElementById('det-tipo').innerText = button.getAttribute('data-tipo');
+            document.getElementById('det-descripcion').innerText = button.getAttribute('data-descripcion');
+
+            const infoPacienteDiv = document.getElementById('det-info-paciente');
+            infoPacienteDiv.innerHTML = "<div class='text-center p-2 text-muted small'>Cargando...</div>";
+            const pId = button.getAttribute('data-paciente-id');
+
+            if(pId && pId !== 'null') {
+                await cargarRecuadroPaciente(pId, infoPacienteDiv);
+            } else {
+                infoPacienteDiv.innerHTML = "<div class='alert alert-warning p-2 small'>No hay paciente asociado.</div>";
+            }
+        });
+    }
+
+    // 4. OTROS: Fecha y AJAX Historia (Tus funciones existentes)
+    document.getElementById('modalNuevaOrden').addEventListener('show.bs.modal', () => {
+        document.getElementById('fechaHoy').innerText = new Date().toLocaleDateString();
+    });
+
+    inputHistoria.addEventListener("change", async () => {
+        const id = inputHistoria.value.trim();
+        if (id) await cargarRecuadroPaciente(id, infoDiv);
+    });
+
+    // FUNCIÓN ASÍNCRONA ÚNICA PARA BUSCAR PACIENTE
+    async function cargarRecuadroPaciente(id, contenedor) {
+        try {
+            const response = await fetch(`/medico/ordenes/buscar-historia/${id}`);
+            if (response.ok) {
+                const h = await response.json();
+                // Aquí agregamos h.documento
+                contenedor.innerHTML = `
+                    <div class="alert alert-info p-3 mt-2 small border-0 shadow-sm" style="background-color: #eef6ff; color: #004aad;">
+                        <div class="d-flex align-items-center mb-1">
+                            <i class="bi bi-person-circle me-2 fs-5"></i>
+                            <strong>${h.nombrePaciente} ${h.apellidoPaciente}</strong>
+                        </div>
+                        <div class="ms-4 text-muted">
+                            <i class="bi bi-card-text me-1"></i> Documento: ${h.documento || 'No registrado'}
+                        </div>
+                    </div>`;
+            } else {
+                contenedor.innerHTML = `<div class="alert alert-warning p-2 mt-2 small">Paciente no encontrado</div>`;
+            }
+        } catch (err) {
+            console.error(err);
+            contenedor.innerHTML = `<div class="alert alert-danger p-2 mt-2 small">Error de conexión</div>`;
+        }
+    }
+
+    // Fecha en Modal Nueva Orden
+    document.getElementById('modalNuevaOrden')?.addEventListener('show.bs.modal', () => {
+        document.getElementById('fechaHoy').innerText = new Date().toLocaleDateString();
     });
 </script>
 

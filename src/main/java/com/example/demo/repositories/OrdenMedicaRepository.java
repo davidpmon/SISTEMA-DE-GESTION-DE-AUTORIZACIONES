@@ -10,15 +10,15 @@ import java.util.Optional;
 
 public interface OrdenMedicaRepository extends JpaRepository<OrdenMedica, Integer> {
 
-    // 🔹 Métodos que ya tenías
+    // Métodos que ya tenías
     List<OrdenMedica> findByMedico(Usuario medico);
     Optional<OrdenMedica> findByIdOrden(Integer idOrden);
 
-    // 🔹 Ordenar por fecha (el que arreglamos)
+    // Ordenar por fecha (el que arreglamos)
     @Query("SELECT o FROM OrdenMedica o ORDER BY o.fecha DESC")
     List<OrdenMedica> obtenerOrdenesRecientes();
 
-    // 🔥 MÉTODOS QUE TE FALTABAN (para AdminService)
+    // MÉTODOS QUE TE FALTABAN (para AdminService)
     List<OrdenMedica> findByEstado(EstadoOrden estado);
 
     List<OrdenMedica> findByEstadoAndMedicoIdUsuario(EstadoOrden estado, Integer idUsuario);

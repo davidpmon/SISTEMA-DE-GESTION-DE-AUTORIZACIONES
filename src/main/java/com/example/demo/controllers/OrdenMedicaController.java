@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.dto.HistoriaClinicaDTO;
 import com.example.demo.models.*;
 import com.example.demo.repositories.*;
+import com.example.demo.services.OrdenesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,12 @@ public class OrdenMedicaController {
     @Autowired
     private PacienteRepository pacienteRepo;
 
+    @Autowired
+    private OrdenesService ordenesService;
+
+    @Autowired
+    private MedicamentoRepository medicamentoRepo;
+
     // Mostrar lista de órdenes del médico logueado
     @GetMapping
     public String listarOrdenes(Model model, Authentication authentication) {
@@ -46,6 +53,7 @@ public class OrdenMedicaController {
 
         model.addAttribute("ordenes", ordenes);
         model.addAttribute("historias", historias);
+        model.addAttribute("medicamentos", medicamentoRepo.findAll());
         return "medico/ordenes"; // plantilla HTML de creación de órdenes
     }
 
