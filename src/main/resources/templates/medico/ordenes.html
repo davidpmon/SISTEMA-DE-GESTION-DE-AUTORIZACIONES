@@ -256,37 +256,56 @@
                     <!-- SECCIÓN EXÁMENES / LABORATORIO -->
                     <div id="sec-exa" class="detalle-box d-none mb-3">
                         <label class="small fw-bold text-muted">Procedimiento Sugerido</label>
-                        <input type="text" class="form-control mb-2" name="ex_nombre"
-                               list="listaExamenes" placeholder="Busque el examen o estudio...">
 
-                        <datalist id="listaExamenes">
-                            <option th:each="p : ${procedimientos}"
-                                    th:if="${p.tipo.name() == 'EXAMEN'}"
-                                    th:value="${p.nombreProcedimiento}">
-                            </option>
-                        </datalist>
+                        <!-- SELECT AGRUPADO POR CATEGORÍA -->
+                        <select class="form-control mb-2" name="ex_nombre" id="selectExamenes" required>
+                            <option value="">-- Selecciona un examen --</option>
+
+                            <optgroup th:each="entry : ${procedimientosPorCategoria.entrySet()}"
+                                      th:label="${entry.key}">
+                                <option th:each="p : ${entry.value}"
+                                        th:if="${p.tipo.name() == 'EXAMEN'}"
+                                        th:value="${p.nombreProcedimiento}"
+                                        th:text="${p.nombreProcedimiento}">
+                                </option>
+                            </optgroup>
+                        </select>
 
                         <textarea class="form-control" name="ex_obs" rows="2" placeholder="Observaciones / Preparación"></textarea>
                     </div>
 
                     <!-- SECCIÓN TERAPIAS -->
                     <div id="sec-ter" class="detalle-box d-none mb-3">
-                        <label class="small fw-bold text-muted">Tipo de Terapia</label>
-                        <input type="text" class="form-control mb-2" name="ter_tipo"
-                               list="listaTerapias" placeholder="Busque la terapia...">
 
-                        <datalist id="listaTerapias">
+                        <label class="small fw-bold text-muted">Tipo de Terapia</label>
+
+                        <select class="form-control mb-2" name="ter_tipo" id="selectTerapias">
+                            <option value="">-- Selecciona una terapia --</option>
+
                             <option th:each="p : ${procedimientos}"
                                     th:if="${p.tipo.name() == 'TERAPIA'}"
-                                    th:value="${p.nombreProcedimiento}">
+                                    th:value="${p.nombreProcedimiento}"
+                                    th:text="${p.nombreProcedimiento}">
                             </option>
-                        </datalist>
+                        </select>
 
                         <div class="mt-3">
-                        <input type="text" class="form-control" name="ter_frec" placeholder="Sesiones / Duración">
+                            <input type="text"
+                                   class="form-control"
+                                   name="ter_frec"
+                                   placeholder="Sesiones / Duración">
+                        </div>
+
+                        <label class="form-label small fw-bold mt-3">
+                            Notas Adicionales / Indicaciones
+                        </label>
+
+                        <textarea name="descripcion"
+                                  id="descripcion"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="Escriba aquí la descripción completa de la orden..."></textarea>
                     </div>
-                        <label class="form-label small fw-bold">Notas Adicionales / Indicaciones</label>
-                        <textarea name="descripcion" id="descripcion" class="form-control" rows="3" placeholder="Escriba aquí la descripción completa de la orden..."></textarea>                    </div>
 
                     <div class="form-check p-3 bg-light border rounded">
                         <input class="form-check-input ms-0 me-2" type="checkbox" id="aceptaTerminosMedico" required>

@@ -38,10 +38,13 @@ public class OrdenMedicaController {
     @Autowired
     private MedicamentoRepository medicamentoRepo;
 
+    @Autowired
+    private ProcedimientoRepository procedimientoRepo;
+
     // Mostrar lista de órdenes del médico logueado
     @GetMapping
     public String listarOrdenes(Model model, Authentication authentication) {
-        String cedula = authentication.getName(); // obtenida del login
+        String cedula = authentication.getName();
         Usuario medico = usuarioRepo.findByCedula(cedula).orElse(null);
 
         if (medico == null) {
@@ -51,10 +54,17 @@ public class OrdenMedicaController {
         List<OrdenMedica> ordenes = ordenRepo.findByMedico(medico);
         List<HistoriaClinica> historias = historiaRepo.findAll();
 
+        // Agrupar procedimientos por categoría
+        Map<String, List<Procedimiento>> procedimientosPorCategoria =
+                procedimientoRepo.findAll().stream()
+                        .collect(java.util.stream.Collectors.groupingBy(Procedimiento::getCategoria));
+
         model.addAttribute("ordenes", ordenes);
         model.addAttribute("historias", historias);
         model.addAttribute("medicamentos", medicamentoRepo.findAll());
-        return "medico/ordenes"; // plantilla HTML de creación de órdenes
+        model.addAttribute("procedimientos", procedimientoRepo.findAll());
+        model.addAttribute("procedimientosPorCategoria", procedimientosPorCategoria);  // ← Nueva línea
+        return "medico/ordenes";
     }
 
     // Crear nueva orden médica
