@@ -258,7 +258,7 @@
                         <label class="small fw-bold text-muted">Procedimiento Sugerido</label>
 
                         <!-- SELECT AGRUPADO POR CATEGORÍA -->
-                        <select class="form-control mb-2" name="ex_nombre" id="selectExamenes" required>
+                        <select class="form-control mb-2" name="ex_nombre" id="selectExamenes">
                             <option value="">-- Selecciona un examen --</option>
 
                             <optgroup th:each="entry : ${procedimientosPorCategoria.entrySet()}"
@@ -295,8 +295,11 @@
                                    name="ter_frec"
                                    placeholder="Sesiones / Duración">
                         </div>
+                    </div>
 
-                        <label class="form-label small fw-bold mt-3">
+                    <!-- NOTAS GENERALES (SIEMPRE DISPONIBLE PARA CUALQUIER ORDEN) -->
+                    <div class="detalle-box mb-3">
+                        <label class="form-label small fw-bold text-muted">
                             Notas Adicionales / Indicaciones
                         </label>
 
@@ -304,7 +307,7 @@
                                   id="descripcion"
                                   class="form-control"
                                   rows="3"
-                                  placeholder="Escriba aquí la descripción completa de la orden..."></textarea>
+                                  placeholder="Escriba aquí observaciones adicionales..."></textarea>
                     </div>
 
                     <div class="form-check p-3 bg-light border rounded">
@@ -392,7 +395,7 @@
 
     // 3. VALIDACIÓN Y ENVÍO DEL FORMULARIO
     form.addEventListener("submit", function(e) {
-        // Validar términos
+
         if (!document.getElementById("aceptaTerminosMedico").checked) {
             e.preventDefault();
             alert("Debe aceptar la responsabilidad profesional.");
@@ -400,16 +403,21 @@
         }
 
         const radioSeleccionado = document.querySelector('input[name="tipo_orden"]:checked');
-        if (!radioSeleccionado) return;
+        if (!radioSeleccionado) {
+            e.preventDefault();
+            alert("Debe seleccionar un tipo de orden.");
+            return;
+        }
 
         const tipo = radioSeleccionado.value;
         let detalleGenerado = "";
 
+        // ===== MEDICAMENTO =====
         if (tipo === "MEDICAMENTO") {
+
             const nombreEscrito = inputMed.value.trim();
             const opcionesValidas = Array.from(selectDatos.options).map(opt => opt.value);
 
-            // VALIDACIÓN: ¿Seleccionó de la lista?
             if (!opcionesValidas.includes(nombreEscrito)) {
                 e.preventDefault();
                 alert("Error: Debe seleccionar un medicamento válido de la lista.");
@@ -421,16 +429,51 @@
             const dosis = document.querySelector('input[name="med_dosis"]').value;
             const frec = document.querySelector('input[name="med_frec"]').value;
             const dur = document.querySelector('input[name="med_dur"]').value;
+
             detalleGenerado = `[MEDICAMENTO] ${nombreEscrito} | Dosis: ${dosis} | Frecuencia: ${frec} | Duración: ${dur}`;
         }
 
-        // ... lógica para EXAMEN o TERAPIA si aplica ...
+        // ===== EXAMEN =====
+        else if (tipo === "EXAMEN_LABORATORIO") {
 
-        // Guardar todo en el textarea oculto/final
+            const examen = document.getElementById("selectExamenes").value;
+            const obs = document.querySelector('textarea[name="ex_obs"]').value;
+
+            if (!examen) {
+                e.preventDefault();
+                alert("Debe seleccionar un examen.");
+                return;
+            }
+
+            detalleGenerado = `[EXAMEN] ${examen}${obs ? " | Observaciones: " + obs : ""}`;
+        }
+
+        // ===== TERAPIA =====
+        else if (tipo === "TERAPIA") {
+
+            const terapia = document.getElementById("selectTerapias").value;
+            const frec = document.querySelector('input[name="ter_frec"]').value;
+
+            if (!terapia) {
+                e.preventDefault();
+                alert("Debe seleccionar una terapia.");
+                return;
+            }
+
+            detalleGenerado = `[TERAPIA] ${terapia}${frec ? " | Sesiones/Duración: " + frec : ""}`;
+        }
+
+        // ===== OTRO =====
+        else if (tipo === "OTRO") {
+            detalleGenerado = `[OTRO] Orden emitida`;
+        }
+
+        // Guardar todo en el textarea final (NOTAS GENERALES)
         const descripcionTextarea = document.getElementById("descripcion");
+        const notas = descripcionTextarea.value.trim();
+
         if (detalleGenerado !== "") {
-            const notas = descripcionTextarea.value;
-            descripcionTextarea.value = `${detalleGenerado}${notas ? '\n\nNOTAS: ' + notas : ''}`;
+            descripcionTextarea.value = `${detalleGenerado}${notas ? "\n\nNOTAS: " + notas : ""}`;
         }
     });
 

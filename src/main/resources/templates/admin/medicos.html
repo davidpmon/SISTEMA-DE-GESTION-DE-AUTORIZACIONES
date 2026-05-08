@@ -95,7 +95,7 @@
                         <td>
                             <span class="badge"
                                   th:classappend="${m.estado.name() == 'Activo'} ? 'bg-success' : 'bg-danger'"
-                                  th:text="${m.estado}">
+                                  th:text="${m.estado.name() == 'Activo'} ? 'Activo' : 'Inactivo'">
                             </span>
                         </td>
 
@@ -108,11 +108,21 @@
 
                             <form th:action="@{/administrador/medicos/{id}/estado(id=${m.idUsuario})}"
                                   method="post" style="display:inline;">
-                                <button type="submit"
-                                        class="btn btn-sm"
-                                        th:classappend="${m.estado.name() == 'Activo'} ? 'btn-danger' : 'btn-success'"
-                                        th:text="${m.estado.name() == 'Activo'} ? 'Desactivar' : 'Activar'">
+
+                                <!-- BOTÓN DESACTIVAR (SOLO SI ESTÁ ACTIVO) -->
+                                <button th:if="${m.estado.name() == 'Activo'}"
+                                        type="submit"
+                                        class="btn btn-sm btn-danger">
+                                    <i class="bi bi-x-circle"></i> Desactivar
                                 </button>
+
+                                <!-- BOTÓN ACTIVAR (SOLO SI ESTÁ INACTIVO) -->
+                                <button th:if="${m.estado.name() == 'Inactivo'}"
+                                        type="submit"
+                                        class="btn btn-sm btn-success">
+                                    <i class="bi bi-check-circle"></i> Activar
+                                </button>
+
                             </form>
                         </td>
 

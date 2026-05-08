@@ -20,6 +20,10 @@ public class UsuarioDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByCedula(cedula)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
+        if (usuario.getEstado() == Usuario.EstadoUsuario.Inactivo) {
+            throw new UsernameNotFoundException("Usuario inactivo. Contacte al administrador.");
+        }
+
         // AQUÍ ESTÁ EL CAMBIO:
         // En lugar de devolver un objeto genérico, devolvemos el "paquete completo"
         return new UsuarioDetalle(usuario);
